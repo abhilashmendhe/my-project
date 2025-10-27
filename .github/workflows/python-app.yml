@@ -25,3 +25,15 @@ jobs:
     - name: Run tests
       run: pytest -v
       
+  build-and-deploy:
+      runs-on: ubuntu-latest
+      needs: test  # Only run if tests pass
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+  
+        - name: Build Docker image
+          run: docker build -t fibonacci-app .
+  
+        - name: Run Docker image
+          run: docker run fibonacci-app
